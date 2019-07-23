@@ -1,0 +1,40 @@
+config MACH_LGE
+	bool
+
+menu "LGE Board Selection"
+
+config MACH_DORY
+	depends on ARCH_MSM8226
+	select MACH_LGE
+	bool "APQ8026 DORY"
+	help
+	  Support for the LGE APQ8026 DORY.
+
+config MACH_LENOK
+	depends on ARCH_MSM8226
+	select MACH_LGE
+	bool "APQ8026 LENOK"
+	help
+	  Support for the LGE APQ8026 LENOK.
+
+config MACH_BASS
+	depends on ARCH_MSM8226
+	select MACH_LGE
+	bool "APQ8026 BASS"
+	help
+	  Support for the LGE APQ8026 BASS.
+
+config LGE_BLUETOOTH
+	bool "Support LGE Bluetooth"
+	depends on BT
+	help
+	  Support for the LGE Bluetooth
+endmenu
+menu "LGE Specific Patches"
+config LGE_HANDLE_PANIC
+	tristate "Support LGE Kernel Panic Handler"
+	default n
+	depends on MACH_LGE
+	help
+	  LGE Error handler
+endmenu

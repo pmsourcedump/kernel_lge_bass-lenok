@@ -1,0 +1,7 @@
+CFLAGS_KERNEL := -fno-unsafe-math-optimizations -fno-strict-aliasing -Wno-tautological-compare
+
+obj-$(CONFIG_DIAG_CHAR) := diagchar.o
+obj-$(CONFIG_DIAGFWD_BRIDGE_CODE) += diagfwd_bridge.o
+obj-$(CONFIG_DIAGFWD_BRIDGE_CODE) += diagfwd_hsic.o
+obj-$(CONFIG_DIAGFWD_BRIDGE_CODE) += diagfwd_smux.o
+diagchar-objs := diagchar_core.o diagchar_hdlc.o diagfwd.o diag_usb.o diagmem.o diagfwd_cntl.o diag_dci.o diag_masks.o diag_debugfs.o

@@ -1,0 +1,98 @@
+/* Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+ * Copyright (c) 2013,2014 LGE Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "apq8026-dory.dtsi"
+
+&soc {
+	sound {
+		dory,mic-en-gpio = <&msmgpio 60 0x00>;
+	};
+	i2c@f9923000 {
+		max17050@36 {
+			maxim,model = [9F B0 B5 E0 B8 00 BA 00
+					BB 10 BC 30 BC 90 BD 00
+					BD A0 BE 40 BF A0 C2 50
+					C4 C0 C7 B0 CB 70 CD D0
+					01 00 0F 10 10 00 13 00
+					12 00 3C E0 34 70 1B F0
+					1B 90 18 00 0C 60 0D E0
+					0C 80 0B F0 04 50 04 50
+					00 80 00 80 00 80 00 80
+					00 80 00 80 00 80 00 80
+					00 80 00 80 00 80 00 80
+					00 80 00 80 00 80 00 80];
+
+			maxim,rcomp0 = <0x0051>;
+			maxim,tempco = <0x242E>;
+			maxim,tempnom = <0x1400>;
+			maxim,tgain = <0xE932>;
+			maxim,toff = <0x2381>;
+			maxim,ichgterm = <0x0140>;
+			maxim,vempty = <0xA2DA>;
+			maxim,qrtable00 = <0x1804>;
+			maxim,qrtable10 = <0x0B00>;
+			maxim,qrtable20 = <0x0700>;
+			maxim,qrtable30 = <0x0600>;
+			maxim,capacity = <0x0267>;
+			maxim,vf_fullcap = <0x0267>;
+			maxim,param-version = <0x0>;
+		};
+	};
+	i2c@f9924000 {
+		inv_dev@68 {
+			axis_map_x = <0>;
+			axis_map_y = <1>;
+			axis_map_z = <2>;
+			negate_x = <0>;
+			negate_y = <1>;
+			negate_z = <1>;
+
+			inven,secondary_axis_map_x = <0>;
+			inven,secondary_axis_map_y = <1>;
+			inven,secondary_axis_map_z = <2>;
+			inven,secondary_negate_x = <1>;
+			inven,secondary_negate_y = <1>;
+			inven,secondary_negate_z = <0>;
+		};
+	};
+	i2c@f9927000 {
+		synaptics@20 {
+			status = "ok";
+		};
+	};
+	vibrator@fd8C3450 {
+		status = "disabled";
+	};
+};
+
+&spmi_bus {
+	qcom,pm8226@1 {
+		qcom,vibrator@c000 {
+                        status = "ok";
+		};
+	};
+};
+
+&pm8226_chg {
+	qcom,vddmax-mv = <4200>;
+	qcom,vddsafe-mv = <4230>;
+	qcom,ibatmax-ma= <300>;
+	qcom,ibatterm-ma = <50>;
+	qcom,ibatsafe-ma = <300>;
+	qcom,warm-bat-mv = <4100>;
+	qcom,cool-bat-mv = <4100>;
+	qcom,ibatmax-warm-ma = <150>;
+	qcom,ibatmax-cool-ma = <150>;
+	qcom,step-dwn-offset-ma = <0>;
+	qcom,step-dwn-thr-mv = <0>;
+};

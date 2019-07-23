@@ -1,0 +1,78 @@
+/* Copyright (c) 2014 LGE Inc. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "apq8026-lenok.dtsi"
+
+&soc {
+	i2c@f9923000 {
+		status = "disabled";
+	};
+
+	i2c@0 {
+		compatible = "i2c-gpio";
+		gpios = <&msmgpio 3 0 /* sda */
+			 &msmgpio 2 0 /* scl */
+			>;
+		i2c-gpio,sda-open-drain;
+		i2c-gpio,scl-open-drain;
+		i2c-gpio,delay-us = <2>;        /* ~100 kHz */
+		#address-cells = <1>;
+		#size-cells = <0>;
+		status = "okay";
+
+		bq27421@55 {
+			compatible = "ti,bq27421";
+			reg = <0x55>;
+			interrupt-parent = <&msmgpio>;
+			interrupts = <31 2>;
+			ti,ext_batt_psy;
+			status = "okay";
+			ti,fast-hib-data = [
+				44 00
+				40
+				05 00 32 01 C2 14 14 00
+				03 13 88 01 00 00 00 00
+				50
+				00 00 00 00 00 00 00 00
+				00 00 00 00 00 00 00 00
+				3E
+
+				50 00
+				40
+				02 BC 01 2C 00 1E 00 C8
+				C8 14 08 00 00 0E 10 00
+				50
+				0A 46 05 14 05 0F 03 20
+				00 01 00 00 0A 01 90 00
+				F0
+
+				50 01
+				40
+				64 00 DC 5C 60 00 7D 00
+				04 03 19 25 0F 14 0A 78
+				50
+				60 28 01 F4 00 00 00 00
+				00 00 43 80 04 01 14 00
+				43];
+		};
+	};
+};
+
+&pm8226_gpios {
+	gpio@c200 { /* GPIO 3 */      /* NFC_CLK_REQ */
+		qcom,mode = <0>;          /* QPNP_PIN_MODE_DIG_IN */
+		qcom,pull = <4>;          /* QPNP_PIN_PULL_DN - Not Fixed */
+		qcom,vin-sel = <3>;       /* QPNP_PIN_VIN2 */
+		qcom,src-sel = <2>;       /* QPNP_PIN_SEL_FUNC_1 */
+		qcom,master-en = <1>;     /* Enable GPIO */
+	};
+};
